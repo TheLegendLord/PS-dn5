@@ -35,7 +35,7 @@ func DodajOceno(studenti map[string]Student, vpisnaStevilka string, ocena int, m
         return
     }
 
-    student.ocene = append(student.ocene, ocena)
+    student.Ocene = append(student.Ocene, ocena)
     studenti[vpisnaStevilka] = student
     return
 }
@@ -48,15 +48,15 @@ func povprecje(studenti map[string]Student, vpisnaStevilka string, stOcen int) f
         return -1.0
     }
 
-    if len(student.ocene) < stOcen {
+    if len(student.Ocene) < stOcen {
         return 0.0
     }
 
     var povprecjeOcen float64 = 0
-    for _, v := range student.ocene {
+    for _, v := range student.Ocene {
         povprecjeOcen += float64(v)
     }
-    povprecjeOcen /= float64(len(student.ocene))
+    povprecjeOcen /= float64(len(student.Ocene))
 
     return povprecjeOcen
 }
@@ -65,7 +65,7 @@ func povprecje(studenti map[string]Student, vpisnaStevilka string, stOcen int) f
 // seznamom ocen.
 func IzpisRedovalnice(studenti map[string]Student) {
     for key, value := range studenti {
-        fmt.Printf("%s - %s %s: %v\n", key, value.ime, value.priimek, value.ocene)
+        fmt.Printf("%s - %s %s: %v\n", key, value.Ime, value.Priimek, value.Ocene)
     }
 }
 
@@ -75,11 +75,11 @@ func IzpisiKoncniUspeh(studenti map[string]Student, stOcen int) {
         povprecnaOcena := povprecje(studenti, key, stOcen)
 
         if povprecnaOcena >= 9 {
-            fmt.Printf("%s %s: povprečna ocena %.2f -> Odličen študent!\n", value.ime, value.priimek, povprecnaOcena)
+            fmt.Printf("%s %s: povprečna ocena %.2f -> Odličen študent!\n", value.Ime, value.Priimek, povprecnaOcena)
         } else if povprecnaOcena >= 6 {
-            fmt.Printf("%s %s: povprečna ocena %.2f -> Povprečen študent\n", value.ime, value.priimek, povprecnaOcena)
+            fmt.Printf("%s %s: povprečna ocena %.2f -> Povprečen študent\n", value.Ime, value.Priimek, povprecnaOcena)
         } else {
-            fmt.Printf("%s %s: povprečna ocena %.2f -> Neuspešen študent\n", value.ime, value.priimek, povprecnaOcena)
+            fmt.Printf("%s %s: povprečna ocena %.2f -> Neuspešen študent\n", value.Ime, value.Priimek, povprecnaOcena)
         }
     }
 }

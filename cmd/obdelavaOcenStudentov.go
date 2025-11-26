@@ -1,7 +1,8 @@
 package main
 
 import (
-	"fmt"
+	"context"
+    "fmt"
     "os"
     
     "github.com/TheLegendLord/PS-dn5/redovalnica"
@@ -15,7 +16,7 @@ func main() {
 		"63190002": {Ime: "Cecilija", Priimek: "Carazaros", Ocene: []int{9, 8, 8, 10, 9}},
 	}
 
-    cmd := &cli.App {
+    cmd := &cli.Command {
         Name: "obdelavaOcenStudentov",
         Usage: "hrani ocene študentam in izračuna njihov končni uspeh",
         Flags: []cli.Flag {
@@ -35,19 +36,19 @@ func main() {
                 Value: 10,
             },
         },
-        Action: func(c *cli.Context) error {
-            stOcen := c.Int("stOcen")
-            minOcena := c.Int("minOcena")
-            maxOcena := c.Int("maxOcena")
+        Action: func(ctx context.Context, cmd *cli.Command) error {
+            stOcen := cmd.Int("stOcen")
+            minOcena := cmd.Int("minOcena")
+            maxOcena := cmd.Int("maxOcena")
 
-            redovalnica.DodajOceno(slovarStudentov, "63190000", 10, minOcena, maxOcena)
-            redovalnica.IzpisRedovalnice(slovarStudentov)
-            redovalnica.IzpisiKoncniUspeh(slovarStudentov, stOcen)
+            redovalnica.DodajOceno(students, "63190000", 10, minOcena, maxOcena)
+            redovalnica.IzpisRedovalnice(students)
+            redovalnica.IzpisiKoncniUspeh(students, stOcen)
             return nil
         },
     }
 
-    if err := app.Run(os.Args); err != nil {
+    if err := cmd.Run(context.Background(), os.Args); err != nil {
         fmt.Println(err)
     }
 }
