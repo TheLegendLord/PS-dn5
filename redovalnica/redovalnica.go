@@ -1,14 +1,15 @@
 // Paket redovalnica omogoča upravljanje z ocenami študentov.
-// Nudi funkcionalnosti za dodajanje ocen, izračun povprečja ocen, izpis redovalnice in
-// določanja končnega uspeha študentov.
+// Nudi funkcionalnosti za dodajanje ocen, izpis redovalnice in
+// določanje končnega uspeha študentov.
 //
 // Primer uporabe:
 //
 //   studenti := map[string]Student{
-//       "123": {ime: "Ana", priimek: "Kovač"},
+//       "123": {Ime: "Ana", Priimek: "Kovač"},
 //   }
-//   redovalnica.DodajOceno(studenti, "123", 9)
-//   avg := redovalnica.PovprecjeGetter(studenti, "123")
+//   redovalnica.DodajOceno(studenti, "123", 9, 1, 10)
+//   redovalnica.IzpisRedovalnice(studenti)
+//   redovalnica.IzpisiKoncniUspeh(studenti, 3)
 package redovalnica
 
 import (
@@ -22,7 +23,7 @@ type Student struct {
     Ocene   []int
 }
 
-// DodajOceno doda oceno (1-10) študentu z dano vpisno številko
+// DodajOceno doda oceno (1-10) študentu z dano vpisno številko, interval možnih ocen določimo z parametri minOcena in maxOcena
 func DodajOceno(studenti map[string]Student, vpisnaStevilka string, ocena int, minOcena int, maxOcena int) {
 	if ocena < minOcena || ocena > maxOcena {
         fmt.Println("Ocena je izven sprejetega intervala")
@@ -69,7 +70,8 @@ func IzpisRedovalnice(studenti map[string]Student) {
     }
 }
 
-// IzpisiKoncniUspeh izpiše končni uspeh vsakega študenta glede na njegovo povprečno oceno.
+// IzpisiKoncniUspeh izpiše končni uspeh vsakega študenta glede na njegovo povprečno oceno, v parametru stOcen 
+// podamo minimalno število potrebnih ocen za pozitivno oceno.
 func IzpisiKoncniUspeh(studenti map[string]Student, stOcen int) {
     for key, value := range studenti {
         povprecnaOcena := povprecje(studenti, key, stOcen)
